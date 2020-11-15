@@ -21,6 +21,7 @@ export default function Counter(props) {
         <Plus color="white" size="26px"></Plus>
       </div>
       <div
+        className={`${props.count === 0 ? "disable" : ""}`}
         onClick={props.minus}
         style={{
           background: "#4DD0E1",

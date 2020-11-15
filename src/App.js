@@ -7,34 +7,80 @@ import { AiOutlineReload as Refresh } from "react-icons/ai";
 export default class App extends Component {
   state = {
     total: 0,
-    counters: [0, 0, 0, 0],
+    // counters: [0, 0, 0, 0],
+    counters: [
+      { value: 0, id: 0 },
+      { value: 0, id: 1 },
+      { value: 0, id: 2 },
+      { value: 0, id: 3 },
+    ],
   };
 
-  add = (i) => {
-    const counters = [...this.state.counters];
-    let count = counters[i];
-    let total = this.state.total;
-    if (count === 0) total += 1;
+  add = (id) => {
+    this.setState(
+      (prevState) => {
+        let total = this.state.total;
 
-    count++;
-    counters[i] = count;
-    this.setState({ counters, total });
+        let newCounters = prevState.counters.slice();
+        newCounters = newCounters.map((counter) => {
+          if (counter.id == id) {
+            if (counter.value === 0) total += 1;
+            counter.value = counter.value + 1;
+          }
+          return counter;
+        });
+        return { counters: newCounters, total };
+      }
+      // () => console.log(this.state)
+    );
+
+    // const counters = [...this.state.counters];
+
+    // let count = counters[i];
+    // let total = this.state.total;
+    // if (count === 0) total += 1;
+
+    // count++;
+    // counters[i] = count;
+    // this.setState({ counters, total });
   };
 
-  minus = (i) => {
-    if (this.state.counters[i] > 0) {
-      const counters = [...this.state.counters];
-      let count = counters[i];
-      let total = this.state.total;
-      if (count === 1) total -= 1;
-      count--;
-      counters[i] = count;
-      this.setState({ total, counters });
-    }
+  minus = (id) => {
+    this.setState(
+      (prevState) => {
+        let total = this.state.total;
+
+        let newCounters = prevState.counters.slice();
+        newCounters = newCounters.map((counter) => {
+          if (counter.id === id) {
+            if (counter.value > 0) {
+              if (counter.value === 1) total -= 1;
+              counter.value = counter.value - 1;
+            }
+          }
+          return counter;
+        });
+        return { counters: newCounters, total };
+      }
+      // () => console.log(this.state)
+    );
+
+    // if (this.state.counters[i] > 0) {
+    //   const counters = [...this.state.counters];
+    //   let count = counters[i];
+    //   let total = this.state.total;
+    //   if (count === 1) total -= 1;
+    //   count--;
+    //   counters[i] = count;
+    //   this.setState({ total, counters });
+    // }
   };
 
   refresh = () => {
-    const counters = [0, 0, 0, 0];
+    const counters = [...this.state.counters].map((counter) => {
+      return { value: 0, id: counter.id };
+    });
+
     this.setState({ counters, total: 0 });
   };
 
@@ -57,13 +103,13 @@ export default class App extends Component {
           >
             <Refresh color="white" size="26px" />
           </div>
-          {this.state.counters.map((count, i) => {
+          {this.state.counters.map((count) => {
             return (
               <Counter
-                add={() => this.add(i)}
-                minus={() => this.minus(i)}
-                key={i}
-                count={count}
+                add={() => this.add(count.id)}
+                minus={() => this.minus(count.id)}
+                key={count.id}
+                count={count.value}
               ></Counter>
             );
           })}
