@@ -1,0 +1,48 @@
+/* 
+#        header
+*/
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #bdbdbd;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon {
+  margin-left: 30px;
+}
+
+.header-container .total {
+  margin-left: 20px;
+  margin-right: 5px;
+  width: 50px;
+  color: white;
+  background: #00b0ff;
+  border-radius: 12px;
+  text-align: center;
+}
+.counters-container {
+  margin-left: 350px;
+  margin-top: 100px;
+}
+
+.count {
+  display: inline-block;
+  margin-right: 10px;
+  width: 60px;
+  color: white;
+  background: #ffc107;
+  border-radius: 6px;
+  text-align: center;
+  color: black;
+  font-size: 28px;
+}
+.count-container {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
