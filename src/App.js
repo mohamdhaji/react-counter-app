@@ -7,7 +7,6 @@ import { AiOutlineReload as Refresh } from "react-icons/ai";
 export default class App extends Component {
   state = {
     total: 0,
-    // counters: [0, 0, 0, 0],
     counters: [
       { value: 0, id: 0 },
       { value: 0, id: 1 },
@@ -23,26 +22,18 @@ export default class App extends Component {
 
         let newCounters = prevState.counters.slice();
         newCounters = newCounters.map((counter) => {
+          const count = { ...counter };
+
           if (counter.id == id) {
             if (counter.value === 0) total += 1;
-            counter.value = counter.value + 1;
+            count.value += 1;
           }
-          return counter;
+          return count;
         });
         return { counters: newCounters, total };
       }
       // () => console.log(this.state)
     );
-
-    // const counters = [...this.state.counters];
-
-    // let count = counters[i];
-    // let total = this.state.total;
-    // if (count === 0) total += 1;
-
-    // count++;
-    // counters[i] = count;
-    // this.setState({ counters, total });
   };
 
   minus = (id) => {
@@ -52,28 +43,19 @@ export default class App extends Component {
 
         let newCounters = prevState.counters.slice();
         newCounters = newCounters.map((counter) => {
+          const count = { ...counter };
           if (counter.id === id) {
             if (counter.value > 0) {
               if (counter.value === 1) total -= 1;
-              counter.value = counter.value - 1;
+              count.value -= 1;
             }
           }
-          return counter;
+          return count;
         });
         return { counters: newCounters, total };
       }
       // () => console.log(this.state)
     );
-
-    // if (this.state.counters[i] > 0) {
-    //   const counters = [...this.state.counters];
-    //   let count = counters[i];
-    //   let total = this.state.total;
-    //   if (count === 1) total -= 1;
-    //   count--;
-    //   counters[i] = count;
-    //   this.setState({ total, counters });
-    // }
   };
 
   refresh = () => {
@@ -90,6 +72,7 @@ export default class App extends Component {
         <Header total={this.state.total}></Header>
         <div className="counters-container">
           <div
+            className=""
             onClick={this.refresh}
             style={{
               background: "#4CAF50",
@@ -101,7 +84,7 @@ export default class App extends Component {
               borderRadius: "3px",
             }}
           >
-            <Refresh color="white" size="26px" />
+            <Refresh style={{ cursor: "pointer" }} color="white" size="26px" />
           </div>
           {this.state.counters.map((count) => {
             return (
